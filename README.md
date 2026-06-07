@@ -42,7 +42,7 @@ This project focuses on NBA team season analysis and performance reviews. Fans o
      - Overlap size and why (or why not) you used overlap
      - Any preprocessing you did before chunking (e.g., stripping HTML, removing headers)
      - What your final chunk count was across all documents -->
-**Preprocessing: The documents were loaded from text files and stripped of extra whitespace before chunking. No HTML or special formatting removal was required because the source documents were already in plain text format.**
+
 
 **Preprocessing: The documents were loaded from text files and stripped of extra whitespace before chunking. No HTML or special formatting removal was required because the source documents were already in plain text format.**
 
@@ -53,6 +53,8 @@ This project focuses on NBA team season analysis and performance reviews. Fans o
 **Why these choices fit your documents:The team reports contain multiple sections such as season overview, strengths, weaknesses, key players, coaching analysis, and playoff outlook. A chunk size of 600 characters preserves enough context for meaningful retrieval while remaining focused on a single topic. A 100-character overlap helps prevent important information from being split across chunk boundaries.**
 
 **Final chunk count:41 chunks**
+
+**Although the final chunk count was 41, retrieval testing showed that the chunks remained specific enough to return relevant team reports for evaluation queries, so I retained the original chunking configuration.**
 
 ---
 
