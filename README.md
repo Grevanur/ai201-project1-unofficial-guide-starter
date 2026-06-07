@@ -42,6 +42,7 @@ This project focuses on NBA team season analysis and performance reviews. Fans o
      - Overlap size and why (or why not) you used overlap
      - Any preprocessing you did before chunking (e.g., stripping HTML, removing headers)
      - What your final chunk count was across all documents -->
+**Preprocessing: The documents were loaded from text files and stripped of extra whitespace before chunking. No HTML or special formatting removal was required because the source documents were already in plain text format.**
 
 **Preprocessing: The documents were loaded from text files and stripped of extra whitespace before chunking. No HTML or special formatting removal was required because the source documents were already in plain text format.**
 
@@ -168,21 +169,21 @@ This prevents the model from relying on outside knowledge and encourages grounde
 ## Sample Chunks
 
 ### Chunk 1 - suns.txt
-suns.txt
+
 Season Overview
 The Phoenix Suns' 45–37 season represented a franchise in transition — competitive enough to stay in the playoff picture, but operating without the championship urgency that defined their recent star-studded iterations. It was a season of recalibration, with Devin Booker carrying an enormous load and the organizational direction becoming clearer game by game.
 Strengths
 Devin Booker is a top-tier offensive weapon and one of the purest scorers in the NBA. His mid-range mastery, late-clock shot creation, and big-game mentality give Phoenix a legitimate go-to option in any situatio
 
 ### Chunk 2 - lakers.txt
-lakers.txt
+
 Season Overview
 The Los Angeles Lakers matched New York's 53–29 record and reaffirmed their status as one of the Western Conference's elite teams. In a West loaded with elite competition, finishing as a top-three seed is a genuine achievement and reflects a team operating at a high, consistent level.
 Strengths
 The Lakers' star power gives them a ceiling that few teams in the league can match. Anthony Davis, when engaged and dominant, is a force on both ends that dramatically alters how opponents can attack. Their ability to win in multiple ways — through pace, through physicality, through half
 
 ### Chunk 3 - timberwolves.txt
-timberwolves.txt
+
 dence as a playmaker lift Minnesota's ceiling considerably. Defensively, the Wolves have the personnel to be disruptive and physical against any opponent.
 Weaknesses
 Minnesota's half-court offense outside of Edwards can be disjointed, and their supporting cast lacks the consistency needed to win tough playoff series. When Edwards is struggling or being schemed against effectively, the Wolves can go long stretches without generating good shots.
@@ -190,14 +191,13 @@ Key Players
 Anthony Edwards is the engine — an explosive scorer and increasingly polished playmaker who has grown into true franchise-player territory. 
 
 ### Chunk 4 - spurs.txt
-spurs.txt
 Season Overview
 The San Antonio Spurs delivered one of the most stunning regular seasons in recent NBA history, finishing 62–20 as the second-best team in the league behind only the Oklahoma City Thunder. What was expected to be another year of promising development turned into a full-blown title contention statement, driven by Victor Wembanyama's explosive leap into superstardom.
 Strengths
 San Antonio excels on both ends of the floor in ways that feel almost unfair given how young this roster is. Their defense — anchored by Wembanyama's otherworldly rim protection — is suffocating in the pain
 
 ### Chunk 5 - hawks.txt
-hawks.txt
+
 Season Overview
 Atlanta's 46–36 season was the definition of a mixed result. The Hawks were good enough to stay in the playoff conversation all year and finish as a play-in team, but not consistent enough to establish themselves as a genuine threat in the postseason. The gap between their potential and their performance remains frustratingly wide.
 Strengths
@@ -216,6 +216,32 @@ Top Results:
 Explanation:
 These chunks are relevant because all three reports discuss elite defensive performance.
 
+### Query 2
+
+Question:
+What are the Lakers' biggest weaknesses?
+
+Top Results:
+- lakers.txt
+- nuggets.txt
+- celtics.txt
+
+Explanation:
+The retrieved Lakers chunk directly discusses health concerns, consistency, and depth issues, which are the weaknesses mentioned in the query.
+
+### Query 3
+
+Question:
+Which team depends most on star players?
+
+Top Results:
+- suns.txt
+- lakers.txt
+- nuggets.txt
+
+Explanation:
+These documents discuss teams whose success depends heavily on elite players such as Devin Booker, Anthony Davis, and Nikola Jokic.
+
 ## Grounded Generation Examples
 
 ### Example 1
@@ -229,13 +255,33 @@ The Thunder were successful because of elite defense, roster depth, and MVP-leve
 Sources:
 - okc.txt
 
+### Example 2
+
+Question:
+What are the Lakers' biggest weaknesses?
+
+Answer:
+The Lakers struggle with health concerns, consistency, and limited depth behind their star players.
+
+Sources:
+- lakers.txt
+
 ## Out-of-Scope Example
 
 Question:
 Who won the NBA championship in 2016?
 
 Response:
+ANSWER
+--------------------------------------------------
 I could not find enough information in the retrieved documents.
+
+SOURCES
+--------------------------------------------------
+spurs.txt
+lakers.txt
+
+Although the retrieval system returned semantically similar basketball-related documents, the generation model correctly refused to answer because the requested information was not present in the retrieved context.
 
 
 ## Query Interface
