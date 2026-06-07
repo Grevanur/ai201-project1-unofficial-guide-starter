@@ -43,6 +43,8 @@ This project focuses on NBA team season analysis and performance reviews. Fans o
      - Any preprocessing you did before chunking (e.g., stripping HTML, removing headers)
      - What your final chunk count was across all documents -->
 
+**Preprocessing: The documents were loaded from text files and stripped of extra whitespace before chunking. No HTML or special formatting removal was required because the source documents were already in plain text format.**
+
 **Chunk size:600 characters**
 
 **Overlap:100 characters**
