@@ -9,10 +9,7 @@
 
 ## Domain
 
-<!-- What topic or category of knowledge does your system cover?
-     Why is this knowledge valuable, and why is it hard to find through official channels?
-     Example: "Student reviews of CS professors at [university] — useful because official
-     course descriptions don't reflect teaching style, exam difficulty, or workload." -->
+This project focuses on NBA team season analysis and performance reviews. Fans often want to understand why teams succeed or fail, which teams have the strongest defenses, which teams depend on star players, and how teams compare heading into the playoffs. Official standings and statistics do not always provide this context. By collecting detailed team reports and enabling semantic search across them, this system provides an unofficial guide to NBA team performance.
 
 ---
 
@@ -22,18 +19,18 @@
      Be specific: include URLs, subreddit names, forum thread titles, or file names.
      Aim for variety — sources that together cover different subtopics or perspectives. -->
 
-| # | Source | Type | URL or file path |
-|---|--------|------|-----------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| 7 | | | |
-| 8 | | | |
-| 9 | | | |
-| 10 | | | |
+| # | Source | Description | URL or location |
+|---|--------|-------------|-----------------|
+| 1 |Oklahoma City Thunder Report| Team season analysis|data/okc.txt|
+| 2 |Boston Celtics Report|Team season analysis|data/celtics.txt|
+| 3 |New York Knicks Report|Team season analysis|data/knicks.txt|
+| 4 |Los Angeles Lakers Report|Team season analysis|data/lakers.txt|
+| 5 |Denver Nuggets Report|Team season analysis|data/nuggets.txt|
+| 6 |Minnesota Timberwolves Report|Team season analysis|data/timberwolves.txt|
+| 7 |San Antonio Spurs Report|Team season analysis|data/spurs.txt|
+| 8 |Phoenix Suns Report|Team season analysis|data/suns.txt|
+| 9 |Cleveland Cavaliers Report|Team season analysis|data/cavs.txt|
+| 10|Atlanta Hawks Report|Team season analysis|data/hawks.txt|
 
 ---
 
@@ -46,13 +43,13 @@
      - Any preprocessing you did before chunking (e.g., stripping HTML, removing headers)
      - What your final chunk count was across all documents -->
 
-**Chunk size:**
+**Chunk size:600 characters**
 
-**Overlap:**
+**Overlap:100 characters**
 
-**Why these choices fit your documents:**
+**Why these choices fit your documents:The team reports contain multiple sections such as season overview, strengths, weaknesses, key players, coaching analysis, and playoff outlook. A chunk size of 600 characters preserves enough context for meaningful retrieval while remaining focused on a single topic. A 100-character overlap helps prevent important information from being split across chunk boundaries.**
 
-**Final chunk count:**
+**Final chunk count:41 chunks**
 
 ---
 
@@ -64,9 +61,9 @@
      Consider: context length limits, multilingual support, accuracy on domain-specific text,
      latency, and local vs. API-hosted. -->
 
-**Model used:**
+**Model used:all-MiniLM-L6-v2 (Sentence Transformers)**
 
-**Production tradeoff reflection:**
+**Production tradeoff reflection:I selected all-MiniLM-L6-v2 because it is lightweight, fast, and performs well for semantic similarity tasks. In a production environment, I would evaluate larger embedding models that provide improved semantic understanding and support for longer contexts. I would also consider latency, cost, multilingual support, and retrieval accuracy when choosing an embedding model.**
 
 ---
 
@@ -79,9 +76,15 @@
      Do not just say "I told it to use the documents" — show the actual instruction or explain
      the mechanism. -->
 
-**System prompt grounding instruction:**
+**System prompt grounding instruction:The system instructs the language model to answer questions using only the retrieved context.
 
-**How source attribution is surfaced in the response:**
+Example instruction:
+
+“Answer the question using ONLY the provided context. If the answer is not contained in the context, say: ‘I could not find enough information in the retrieved documents.’”
+
+This prevents the model from relying on outside knowledge and encourages grounded responses.**
+
+**How source attribution is surfaced in the response:After retrieval, the system displays the source file names associated with the retrieved chunks. These sources are shown alongside the generated answer so users can identify where the information originated.**
 
 ---
 
@@ -93,11 +96,11 @@
 
 | # | Question | Expected answer | System response (summarized) | Retrieval quality | Response accuracy |
 |---|----------|-----------------|------------------------------|-------------------|-------------------|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
+| 1 | What made the Oklahoma City Thunder successful? | Defense, depth, MVP-level play | Correctly identified defense, depth, and Shai Gilgeous-Alexander’s impact |Relevant |Accurate |
+| 2 | What are the Lakers’ biggest weaknesses? | Health and consistency | Correctly identified health concerns and roster depth issues|Relevant | Accurate|
+| 3 | Which team has the strongest defense? | Thunder, Celtics, or Spurs | Returned Thunder as a leading defensive team| Relevant| Accurate|
+| 4 | Which team depends most on star players? | Lakers, Suns, or Nuggets | Highlighted reliance on elite star players| Partially Relevant| Partially Accurate|
+| 5 | Which team has the best playoff outlook? | Thunder, Celtics, Nuggets, or Lakers | Correctly identified championship contenders| Relevant| Accurate|
 
 **Retrieval quality:** Relevant / Partially relevant / Off-target  
 **Response accuracy:** Accurate / Partially accurate / Inaccurate
@@ -117,13 +120,13 @@
      "The embedding model treated the professor's nickname as out-of-vocabulary and returned
      results from an unrelated review" is an explanation. -->
 
-**Question that failed:**
+**Question that failed:Which team depends most on star players?**
 
-**What the system returned:**
+**What the system returned:The answer discussed several teams but did not clearly identify a single team.**
 
-**Root cause (tied to a specific pipeline stage):**
+**Root cause (tied to a specific pipeline stage):The retrieval stage returned chunks from multiple teams because several reports discussed star-player dependence. The embedding model considered these chunks similarly relevant, resulting in ambiguous context for generation.**
 
-**What you would change to fix it:**
+**What you would change to fix it:I would experiment with reranking retrieved chunks or increasing document specificity so the model can better distinguish between teams that rely heavily on individual stars.**
 
 ---
 
@@ -132,9 +135,9 @@
 <!-- Reflect on how planning.md shaped your implementation.
      Answer both questions with at least 2–3 sentences each. -->
 
-**One way the spec helped you during implementation:**
+**One way the spec helped you during implementation:The planning document helped define the chunking strategy, retrieval approach, and evaluation questions before implementation. Having these decisions documented made it easier to verify whether the system was behaving as intended.**
 
-**One way your implementation diverged from the spec, and why:**
+**One way your implementation diverged from the spec, and why:The original plan anticipated using ten reports with approximately equal lengths. During implementation, some reports contained more detailed analysis than others, which resulted in varying chunk counts across documents. The retrieval system still performed effectively despite this difference.**
 
 ---
 
@@ -151,12 +154,12 @@
 
 **Instance 1**
 
-- *What I gave the AI:*
-- *What it produced:*
-- *What I changed or overrode:*
+- *What I gave the AI:    My chunking requirements and project architecture.*
+- *What it produced:    Python code for document ingestion and chunking.*
+- *What I changed or overrode:    I verified the chunk sizes manually and adjusted the implementation to use a 600-character chunk size with 100-character overlap.*
 
 **Instance 2**
 
-- *What I gave the AI:*
-- *What it produced:*
-- *What I changed or overrode:*
+- *What I gave the AI:    The retrieval requirements, embedding model choice, and ChromaDB storage design.*
+- *What it produced:    Code for embedding generation, vector storage, retrieval, and Groq-based answer generation.*
+- *What I changed or overrode:    I tested retrieval quality with evaluation questions and modified the number of retrieved chunks to improve answer relevance.*
