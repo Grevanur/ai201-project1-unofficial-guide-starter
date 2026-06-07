@@ -159,7 +159,98 @@ This prevents the model from relying on outside knowledge and encourages grounde
 - *What I changed or overrode:    I verified the chunk sizes manually and adjusted the implementation to use a 600-character chunk size with 100-character overlap.*
 
 **Instance 2**
-
 - *What I gave the AI:    The retrieval requirements, embedding model choice, and ChromaDB storage design.*
 - *What it produced:    Code for embedding generation, vector storage, retrieval, and Groq-based answer generation.*
 - *What I changed or overrode:    I tested retrieval quality with evaluation questions and modified the number of retrieved chunks to improve answer relevance.*
+
+## Sample Chunks
+
+### Chunk 1 - suns.txt
+suns.txt
+Season Overview
+The Phoenix Suns' 45–37 season represented a franchise in transition — competitive enough to stay in the playoff picture, but operating without the championship urgency that defined their recent star-studded iterations. It was a season of recalibration, with Devin Booker carrying an enormous load and the organizational direction becoming clearer game by game.
+Strengths
+Devin Booker is a top-tier offensive weapon and one of the purest scorers in the NBA. His mid-range mastery, late-clock shot creation, and big-game mentality give Phoenix a legitimate go-to option in any situatio
+
+### Chunk 2 - lakers.txt
+lakers.txt
+Season Overview
+The Los Angeles Lakers matched New York's 53–29 record and reaffirmed their status as one of the Western Conference's elite teams. In a West loaded with elite competition, finishing as a top-three seed is a genuine achievement and reflects a team operating at a high, consistent level.
+Strengths
+The Lakers' star power gives them a ceiling that few teams in the league can match. Anthony Davis, when engaged and dominant, is a force on both ends that dramatically alters how opponents can attack. Their ability to win in multiple ways — through pace, through physicality, through half
+
+### Chunk 3 - timberwolves.txt
+timberwolves.txt
+dence as a playmaker lift Minnesota's ceiling considerably. Defensively, the Wolves have the personnel to be disruptive and physical against any opponent.
+Weaknesses
+Minnesota's half-court offense outside of Edwards can be disjointed, and their supporting cast lacks the consistency needed to win tough playoff series. When Edwards is struggling or being schemed against effectively, the Wolves can go long stretches without generating good shots.
+Key Players
+Anthony Edwards is the engine — an explosive scorer and increasingly polished playmaker who has grown into true franchise-player territory. 
+
+### Chunk 4 - spurs.txt
+spurs.txt
+Season Overview
+The San Antonio Spurs delivered one of the most stunning regular seasons in recent NBA history, finishing 62–20 as the second-best team in the league behind only the Oklahoma City Thunder. What was expected to be another year of promising development turned into a full-blown title contention statement, driven by Victor Wembanyama's explosive leap into superstardom.
+Strengths
+San Antonio excels on both ends of the floor in ways that feel almost unfair given how young this roster is. Their defense — anchored by Wembanyama's otherworldly rim protection — is suffocating in the pain
+
+### Chunk 5 - hawks.txt
+hawks.txt
+Season Overview
+Atlanta's 46–36 season was the definition of a mixed result. The Hawks were good enough to stay in the playoff conversation all year and finish as a play-in team, but not consistent enough to establish themselves as a genuine threat in the postseason. The gap between their potential and their performance remains frustratingly wide.
+Strengths
+When Trae Young is on, the Hawks' offense is genuinely elite. His pick-and-roll mastery, pull-up shooting, and lob-passing ability create buckets that no other point guard in the league can replicate. On their best nights, Atlanta can score
+
+## Retrieval Examples
+
+### Query 1
+Question: Which team has the best defense?
+
+Top Results:
+- okc.txt
+- spurs.txt
+- celtics.txt
+
+Explanation:
+These chunks are relevant because all three reports discuss elite defensive performance.
+
+## Grounded Generation Examples
+
+### Example 1
+
+Question:
+What made the Oklahoma City Thunder successful?
+
+Answer:
+The Thunder were successful because of elite defense, roster depth, and MVP-level play from Shai Gilgeous-Alexander.
+
+Sources:
+- okc.txt
+
+## Out-of-Scope Example
+
+Question:
+Who won the NBA championship in 2016?
+
+Response:
+I could not find enough information in the retrieved documents.
+
+
+## Query Interface
+
+Input:
+Natural language NBA question entered by the user.
+
+Output:
+Generated answer based on retrieved documents and a list of source files used.
+
+Example:
+
+Input:
+What are the Lakers' biggest weaknesses?
+
+Output:
+Health concerns, consistency, and roster depth issues.
+
+Sources:
+- lakers.txt
