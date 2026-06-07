@@ -9,7 +9,7 @@
 
 ## Domain
 
-<!-- What domain did you choose? Why is this knowledge valuable and hard to find through official channels? -->
+This project focuses on NBA team season analysis and performance reviews. Fans and analysts often rely on season reports, expert commentary, and team evaluations to understand why teams succeed or struggle. This information is scattered across multiple sources and perspectives, making it difficult to compare teams and identify common themes. The system acts as an unofficial NBA team analysis guide that allows users to ask questions about team strengths, weaknesses, key players, coaching impact, and playoff outlook.
 
 ---
 
@@ -20,16 +20,16 @@
 
 | # | Source | Description | URL or location |
 |---|--------|-------------|-----------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| 7 | | | |
-| 8 | | | |
-| 9 | | | |
-| 10 | | | |
+| 1 |Oklahoma City Thunder Report| Team season analysis|data/okc.txt|
+| 2 |Boston Celtics Report|Team season analysis|data/celtics.txt|
+| 3 |New York Knicks Report|Team season analysis|data/knicks.txt|
+| 4 |Los Angeles Lakers Report|Team season analysis|data/lakers.txt|
+| 5 |Denver Nuggets Report|Team season analysis|data/nuggets.txt|
+| 6 |Minnesota Timberwolves Report|Team season analysis|data/timberwolves.txt|
+| 7 |San Antonio Spurs Report|Team season analysis|data/spurs.txt|
+| 8 |Phoenix Suns Report|Team season analysis|data/suns.txt|
+| 9 |Cleveland Cavaliers Report|Team season analysis|data/cavs.txt|
+| 10|Atlanta Hawks Report|Team season analysis|data/hawks.txt|
 
 ---
 
